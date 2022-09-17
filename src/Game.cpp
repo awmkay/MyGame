@@ -1,19 +1,21 @@
 #include "Game.h"
 
+#include <cmath>
+
 Game::Game() : 
-		mWindow(sf::VideoMode(640, 480), "MyGame"),
-		mTexture(),
+		mWindow(sf::VideoMode({640, 480}), "MyGame"),
+		textures(),
 		mPlayer(),
 		mIsMovingUp(false),
 		mIsMovingLeft(false),
 		mIsMovingDown(false),
 		mIsMovingRight(false),
 		TimePerFrame(sf::seconds(1.0f / 60.0f)) {
-	if (!mTexture.loadFromFile("media/textures/mario.png")) {
-		// Handle error
-	}
-	mPlayer.setTexture(mTexture);
-	mPlayer.setPosition(100.0f, 100.0f);
+	textures.load(Textures::Airplane, "media/textures/airplane.png");
+	textures.load(Textures::Landscape, "media/textures/desert.png");
+
+	mPlayer.setTexture(textures.get(Textures::Airplane));
+	mPlayer.setPosition({100.0f, 100.0f});
 }
 
 Game::~Game() {}
@@ -69,8 +71,12 @@ void Game::update(sf::Time deltaTime) {
 		movement.x += 1.0f;
 	}
 
+	float abs = std::sqrt(movement.x * movement.x + movement.y * movement.y);
+	if (abs > 0) {
+		movement.x /= abs;
+		movement.y /= abs;
+	}
 	mPlayer.move(movement * deltaTime.asSeconds());
-	//mPlayer.move(movement);
 }
 
 void Game::render() {

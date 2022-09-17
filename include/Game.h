@@ -1,6 +1,8 @@
 #ifndef _INCLUDE_GAME_H
 #define _INCLUDE_GAME_H
 
+#include "ResourceHolder.h"
+
 #include <SFML/Graphics.hpp>
 
 class Game {
@@ -18,12 +20,15 @@ class Game {
 
 	private:
 		sf::RenderWindow mWindow;
-		sf::Texture mTexture;
+
+		ResourceHolder<sf::Texture, Textures::ID>textures;
+
 		sf::Sprite mPlayer;
 		bool mIsMovingUp;
 		bool mIsMovingLeft;
 		bool mIsMovingDown;
 		bool mIsMovingRight;
+
 		const sf::Time TimePerFrame;
 };
 #endif

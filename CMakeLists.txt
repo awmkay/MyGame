@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 3.21)
 set(EXECUTABLE_NAME MyGame)
 project(${EXECUTABLE_NAME} LANGUAGES CXX)
 
+# Generate compile_commands.json
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Include SFML
 include(FetchContent)
 FetchContent_Declare(SFML
@@ -12,7 +15,7 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 # Adding code and linking lbiraries
-add_executable(${EXECUTABLE_NAME} src/main.cpp src/Game.cpp)
+add_executable(${EXECUTABLE_NAME} src/main.cpp src/Game.cpp src/ResourceHolder.cpp)
 include_directories(include)
 target_link_libraries(${EXECUTABLE_NAME} PRIVATE sfml-graphics)
 target_compile_features(${EXECUTABLE_NAME} PRIVATE cxx_std_17)
