@@ -15,16 +15,19 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 # Adding code and linking lbiraries
-add_executable(${EXECUTABLE_NAME} src/main.cpp src/Game.cpp src/ResourceHolder.cpp)
+set(TARGET_SRC
+	src/Aircraft.cpp
+	src/Entity.cpp
+	src/Game.cpp
+	src/ResourceHolder.cpp
+	src/SceneNode.cpp
+	src/SpriteNode.cpp
+	src/World.cpp
+	src/main.cpp)
 include_directories(include)
+add_executable(${EXECUTABLE_NAME} ${TARGET_SRC})
 target_link_libraries(${EXECUTABLE_NAME} PRIVATE sfml-graphics)
 target_compile_features(${EXECUTABLE_NAME} PRIVATE cxx_std_17)
-
-# Windows shizzle
-if (WIN32 AND BUILD_SHARED_LIBS)
-    add_custom_command(TARGET ${EXECUTABLE_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:${EXECUTABLE_NAME}> $<TARGET_FILE_DIR:${EXECUTABLE_NAME}> COMMAND_EXPAND_LISTS)
-endif()
 
 # Not sure what this does
 install(TARGETS ${EXECUTABLE_NAME})

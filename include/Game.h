@@ -1,14 +1,13 @@
 #ifndef _INCLUDE_GAME_H
 #define _INCLUDE_GAME_H
 
-#include "ResourceHolder.h"
+#include "World.h"
 
 #include <SFML/Graphics.hpp>
 
-class Game {
+class Game : private sf::NonCopyable {
 	public:
 		Game();
-		~Game();
 		void run();
 
 	private:
@@ -20,15 +19,8 @@ class Game {
 
 	private:
 		sf::RenderWindow mWindow;
-
-		ResourceHolder<sf::Texture, Textures::ID>textures;
-
-		sf::Sprite mPlayer;
-		bool mIsMovingUp;
-		bool mIsMovingLeft;
-		bool mIsMovingDown;
-		bool mIsMovingRight;
-
-		const sf::Time TimePerFrame;
+		World mWorld;
+		
+		const sf::Time timePerFrame;
 };
 #endif
